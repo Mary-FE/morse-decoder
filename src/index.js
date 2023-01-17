@@ -38,7 +38,22 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let symbols_array = [];
+
+    for(let i = 0; i < expr.length; i+=10) {
+        if (i + 10 <= expr.length) {
+            let symbol = expr.substring(i, i + 10);
+
+            symbol = symbol.replace(/10/gi, '.'); // step 1 - find all dots
+            symbol = symbol.replace(/11/gi, '-'); // step 2 - find all dashes
+            symbol = symbol.replace(/00/gi, '');  // step 3 - remove empty spaces
+            symbol = symbol.replace(/\*\*\*\*\*\*\*\*\*\*/gi, ' ');  // step 4 - find whitespace
+            
+            symbols_array.push(MORSE_TABLE[symbol] ? MORSE_TABLE[symbol] : symbol);
+        }
+    }
+
+    return symbols_array.join('');
 }
 
 module.exports = {
